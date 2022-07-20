@@ -13,20 +13,6 @@
       with_items:
         - nano
 
-    - name: Ensuring that wheel is able to use sudo without password
-      lineinfile:
-        path: /etc/sudoers
-        regexp: '^%wheel'
-        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
-
-    - name: Set includedir in sudoers
-      lineinfile:
-        dest: /etc/sudo.conf
-        line: "#includedir /etc/sudoers.d"
-        state: present
-        validate: "/usr/sbin/visudo -cf %s"
-
     - name: Add users to sudo
       lineinfile:
         path: "/etc/sudoers.d/{{ username }}"
